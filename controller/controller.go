@@ -6,7 +6,10 @@ import (
 	"encoding/json"
 	"net/http"
 	"runtime"
+	"strconv"
+	"time"
 
+	"github.com/johansetia/bpjshackathon/bpjs/bpjscheck"
 	"github.com/johansetia/bpjshackathon/core/notify"
 	"github.com/johansetia/bpjshackathon/helper"
 	"github.com/johansetia/bpjshackathon/model/modelanalisa"
@@ -52,14 +55,61 @@ func NotificationDayOne() {
 	}
 }
 
-// NotificationDayTwo is
-func NotificationDayTwo() {
-	// gu := new(modeluser.Data)
-	// uss := gu.Get()
+// NotificationDayTwoToTen is
+func NotificationDayTwoToTen() {
+	gu := new(modeluser.Data)
+	currentTime := time.Now()
+	date := currentTime.Format("2006-01-02")[8:10]
+	dt, _ := strconv.Atoi(date)
 
-	// get all user
-	// for each => get analisa
-	// push msg
+	for _, us := range *gu.Get() {
+		s := new(bpjscheck.Request)
+		s.NoKK = us.MainBPJSNum
+		s.Check()
+
+		if s.Status == 0 {
+			a := new(modelanalisa.Data)
+			a.MainNum = us.MainBPJSNum
+			a.NaiveBayes()
+			s := a.R.Status
+
+			msg := new(helper.Socket)
+			msg.ID = us.MainBPJSNum
+
+			msg.Status = "analisa"
+			msg.Title = "Pembayaran BPJS"
+			msg.Message = "Hai " + us.Name + ", ayo membayar. "
+
+			if dt >= 2 {
+				msg.Message += "Sudah tanggal " + date + " loh,"
+			}
+
+			if s == "LOW" {
+				msg.Message += "kamu kan selalu tertib :D"
+			} else if s == "MEDIUM" {
+				msg.Message += "kamu udah sering terlambat kan ?"
+			} else if s == "HARD" {
+				msg.Message += "kamu keseringan terlambat nihh"
+			} else if s == "FREEZE" {
+				msg.Message = "Yuk isi kuisioner dari BPJS"
+				d := new(helper.Action)
+				d.Action = "yes"
+				d.Level = "FREEZE"
+				msg.Data = d
+			}
+
+			if dt == 10 {
+				msg.Message += "Status kamu masih belum terbayar lohh"
+			}
+
+			bson, err := json.Marshal(msg)
+			if err != nil {
+				continue
+			}
+			notify.Msg <- string(bson)
+		}
+	}
+
 }
 
 // APIPush is

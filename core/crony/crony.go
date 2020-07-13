@@ -25,12 +25,22 @@ func runMinutes(c *cron.Cron) {
 	// At 08:00 on day-of-month 1.
 	c.AddFunc("0 8 1 * *", controller.NotificationDayOne)
 	// At 08:00 on day-of-month 1.
-	c.AddFunc("0 8 2 * *", controller.NotificationDayTwo)
+	c.AddFunc("0 8 2 * *", controller.NotificationDayTwoToTen)
+	c.AddFunc("0 8 3 * *", controller.NotificationDayTwoToTen)
+	c.AddFunc("0 8 4 * *", controller.NotificationDayTwoToTen)
+	c.AddFunc("0 8 5 * *", controller.NotificationDayTwoToTen)
+	c.AddFunc("0 8 6 * *", controller.NotificationDayTwoToTen)
+	c.AddFunc("0 8 7 * *", controller.NotificationDayTwoToTen)
+	c.AddFunc("0 8 8 * *", controller.NotificationDayTwoToTen)
+	c.AddFunc("0 8 9 * *", controller.NotificationDayTwoToTen)
+	c.AddFunc("0 8 10 * *", controller.NotificationDayTwoToTen)
 	c.Start()
 }
 
 func runSecond(c *cron.Cron) {
 	c.AddFunc("*/5 * * * * *", controller.NotificationDayOne)
+	c.AddFunc("*/3 * * * * *", controller.NotificationDayTwoToTen)
+
 	c.Start()
 }
 

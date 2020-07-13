@@ -13,7 +13,7 @@ func (d *Data) NaiveBayes() *Data {
 		return d
 	}
 	err = db.Table(Tn).Select("*").
-		Where("main_bpjs_number = ?", d.MainNum).
+		Where("bpjs_number = ?", d.MainNum).
 		Scan(&d).Error
 	if err != nil {
 		return d

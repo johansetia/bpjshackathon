@@ -18,6 +18,7 @@ func getMsgServer(serverChan chan chan string) {
 	for {
 		select {
 		case client, _ := <-serverChan:
+			fmt.Println(client)
 			Clients = append(Clients, client)
 		case msg, _ := <-Msg:
 			// Send the msg to all connected clients:

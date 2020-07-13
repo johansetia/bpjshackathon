@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/johansetia/bpjshackathon/bpjs/bpjscheck"
 	"github.com/johansetia/bpjshackathon/controller"
 	"github.com/johansetia/bpjshackathon/core/databases"
 	"github.com/johansetia/bpjshackathon/core/notify"
@@ -26,6 +27,8 @@ func Warm() bool {
 		return false
 	}
 
+	adapter := os.Getenv("ADAPTER_URL")
+	bpjscheck.AdapterURL = adapter
 	user := os.Getenv("DB_USERNAME")
 	port := os.Getenv("DB_PORT")
 	addr := os.Getenv("DB_ADDR")

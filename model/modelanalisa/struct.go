@@ -6,7 +6,7 @@ const Tn = "analysis"
 type (
 	// Data o
 	Data struct {
-		MainNum        string `gorm:"column:main_bpjs_number"`
+		MainNum        string `gorm:"column:bpjs_number"`
 		Provinsi       string `gorm:"column:provinsi"`
 		SalaryGrade    string `gorm:"column:salary_grade"`
 		Kelas          string `gorm:"column:kelas"`
