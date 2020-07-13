@@ -38,7 +38,7 @@ func runMinutes(c *cron.Cron) {
 }
 
 func runSecond(c *cron.Cron) {
-	c.AddFunc("*/5 * * * * *", controller.NotificationDayOne)
+	c.AddFunc("*/10 * * * * *", controller.NotificationDayOne)
 	c.AddFunc("*/3 * * * * *", controller.NotificationDayTwoToTen)
 
 	c.Start()

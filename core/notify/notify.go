@@ -50,14 +50,6 @@ func Server(c echo.Context) error {
 		select {
 		case txt, _ := <-client:
 			go func() {
-				mt, msg, _ := ws.ReadMessage()
-				if string(msg) != "" {
-					ws.WriteMessage(mt, []byte("Connection OK!!"))
-					return
-				}
-			}()
-
-			go func() {
 				writer, err := ws.NextWriter(websocket.TextMessage)
 
 				if err != nil {

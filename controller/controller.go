@@ -62,6 +62,9 @@ func NotificationDayTwoToTen() {
 	date := currentTime.Format("2006-01-02")[8:10]
 	dt, _ := strconv.Atoi(date)
 
+	if dt > 10 {
+		return
+	}
 	for _, us := range *gu.Get() {
 		s := new(bpjscheck.Request)
 		s.NoKK = us.MainBPJSNum
